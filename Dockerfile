@@ -13,6 +13,7 @@ ENV DJANGO_SUPERUSER_PASSWORD=admin1234!
 
 WORKDIR ./LottoApp
 
+RUN python manage.py clearsessions
 RUN python manage.py makemigrations lottos
 RUN python manage.py migrate
 RUN python manage.py createsuperuser --noinput || echo "Superuser already exits"
