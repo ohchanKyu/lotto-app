@@ -1,0 +1,193 @@
+body {
+    background-image: url('../image/lotto-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+h4{
+    font-size:16px;
+    color:#333;
+    text-align: center;
+    margin-bottom: 0;
+}
+.description{
+    font-weight: bold;
+    font-size:12px;
+    color:red;
+    text-align: center;
+}
+.method-description{
+    font-weight: bold;
+    font-size:12px;
+    color:#34495e;
+    text-align: center;
+}
+.method-box {
+    margin:20px 0;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #453fb2; 
+    border-radius: 4px; 
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom {
+    background-color: #453fb2;
+}
+.checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
+    content: '✔';
+    color: white;
+    font-size: 14px;
+}
+.container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    width:100%;
+    margin-top:10px;
+    background-color: #453fb2;
+    border-radius: 8px;
+    border: none;
+    padding:10px 20px;
+    color:white;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+button:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+.number-select-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; 
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 800px;
+}
+.select-wrapper {
+    position: relative;
+    width: 150px;
+}
+.number-select {
+    width: 100%;
+    font-weight: bold;
+    padding: 10px;
+    border: 2px solid #453fb2;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    appearance: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.number-select option[value=""] {
+    color: #aaa;
+}
+.number-select:hover {
+    border-color: #453fb2;
+}
+.number-select:focus {
+    outline: none;
+    border-color: #453fb2;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: #453fb2;
+    pointer-events: none;
+}
+.number-select:focus + .select-wrapper::after {
+    color: #453fb2;
+}
+.hidden {
+    display: none;
+}
+.sudo-method {
+    font-size: 14px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin:0;
+    text-align: center;
+}
+#auto-numbers{
+    font-size: 14px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-top: 1rem;
+    text-align: center;
+}
+.number-circle-container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 10px;
+    margin-top: 20px;
+}
+.number-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    cursor: default;
+}
+.number-circle:hover {
+    transform: scale(1.1);
+    background-color: #0056b3;
+}

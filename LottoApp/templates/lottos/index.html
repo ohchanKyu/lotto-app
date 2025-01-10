@@ -1,0 +1,31 @@
+{% load static %}
+<html lang="ko">
+   <head>
+      <meta charset="utf-8" />
+      <title>Lotto Index Page</title>
+      <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+   </head>
+   <body>
+        <div class="container">
+            <h3>로또 당첨 확인</h3>
+            <form method="POST" action="{% url 'index' %}">
+                {% csrf_token %}
+                <label for="user_id">자신의 고유 ID를 입력하세요</label>
+                <p class="description">당첨 결과는 제일 마지막에 추첨한 번호로 선정됩니다.</p>
+                <input type="text" id="user_id" name="user_id" required>
+                {% if result %}
+                    <p class="result-message"># {{ user_id }} <br> 당첨 결과 - {{ result }}</p>
+                {% endif %}
+                {% if error %}
+                    <p class="error-message"># {{ user_id }} <br> {{ error }}</p>
+                {% endif %}
+                <button type="submit">당첨 여부 확인</button>
+            </form>
+            <div class="lotto-buy">
+                <a href="{% url 'buy' %}">
+                    <button class="buy-lotto">로또 사러가기</button>
+                </a>
+            </div>
+        </div>
+   </body>
+</html>

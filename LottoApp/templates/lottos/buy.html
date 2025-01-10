@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Lotto Page</title>
+    <link rel="stylesheet" href="{% static 'css/buy.css' %}" />
+</head>
+<body>
+    <div class="container">
+        <h3>로또 구매</h3>
+        <h4># 고유 식별 코드 - {{ id }}</h4>
+        <p class="description">
+            당첨 확인을 위해 반드시 기억해주세요!
+        </p>
+        <hr>
+        <div class="method-box">
+            <p class="method-description">
+                자동 구매를 원하시면 해당 박스에 체크해주세요! <br>
+                클릭을 안하시면 수동 구매를 통해 로또 구매 가능합니다.
+            </p>
+            <label class="checkbox-label">
+                <input type="checkbox" id="auto" name="auto" onchange="toggleNumberInputs()">
+                <span class="checkbox-custom"></span>
+                자동 구매
+            </label>
+        </div>
+        <hr>
+        <form method="POST" action="{% url 'buy' %}">
+            {% csrf_token %}
+            <input type="hidden" id="user-id" name="id" value="{{ id }}">
+            <input type="hidden" id="lotto-numbers" name="lotto_numbers" value="">
+            <br>
+            <div id="manual-selection">
+                <p class="sudo-method"> 수동으로 선택합니다. <br> 1,2,..6번까지 숫자를 (1~45)번 범위 안에서 선택하세요</p>
+                <br>
+                <div class="number-select-container">
+                    {% for i in first_range %}
+                        <div class="select-wrapper">
+                            <select name="number{{ i }}" class="number-select">
+                                <option value="" disabled selected>{{ i }}번 번호 선택</option>
+                                {% for num in second_range %}
+                                    <option value="{{ num }}">{{ num }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="auto-selection" class="hidden">
+                <p class="sudo-method">자동으로 번호를 선택합니다.</p>
+                <div id="auto-numbers" class="number-circle-container"></div>
+            </div>
+            <br>
+            <button type="submit">로또 구매</button>
+        </form>
+        <a href="{% url 'index' %}">
+            <button class="buy-lotto">로또 당첨 확인</button>
+        </a>
+    </div>
+</body>
+<script>
+function toggleNumberInputs() {
+
+    const autoCheckbox = document.getElementById('auto');
+    const manualSelection = document.getElementById('manual-selection');
+    const autoSelection = document.getElementById('auto-selection');
+    const autoNumbers = document.getElementById('auto-numbers');
+    const submitButton = document.querySelector('button[type="submit"]');
+
+    if (autoCheckbox.checked) {
+        manualSelection.classList.add('hidden');
+        autoSelection.classList.remove('hidden');
+
+        autoNumbers.textContent = '자동 생성 중입니다...';
+        submitButton.disabled = true;
+        submitButton.innerHTML = '잠시만 대기해주세요.'
+        setTimeout(() => {
+            const generatedNumbers = generateRandomNumbers();
+            autoNumbers.textContent = ''
+            generatedNumbers.forEach((number) => {
+                const circle = document.createElement('div');
+                circle.classList.add('number-circle');
+                circle.textContent = number;
+                autoNumbers.appendChild(circle);
+            });
+            submitButton.disabled = false;
+            submitButton.innerHTML = '로또 구매'
+        }, 1500);
+        
+    } else {
+        manualSelection.classList.remove('hidden');
+        autoSelection.classList.add('hidden');
+        submitButton.disabled = false;
+    }
+}
+
+function generateRandomNumbers() {
+    const numbers = Array.from({ length: 45 }, (_, i) => i + 1);
+    const shuffled = numbers.sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, 6).sort((a, b) => a - b);
+}
+function validateForm(event) {
+    const autoCheckbox = document.getElementById('auto');
+    const lottoNumbersInput = document.getElementById('lotto-numbers');
+
+    let selectedArray = [];
+    if (autoCheckbox.checked) {
+        const autoNumbersContainer = document.getElementById('auto-numbers');
+        const numberCircles = autoNumbersContainer.querySelectorAll('.number-circle');
+        selectedArray = Array.from(numberCircles).map(circle => parseInt(circle.textContent.trim()));
+        lottoNumbersInput.value = JSON.stringify(selectedArray);
+        return true;
+    }
+
+    const selects = document.querySelectorAll('#manual-selection .number-select');
+    const selectedNumbers = new Set();
+
+    for (const select of selects) {
+        const value = select.value;
+        if (!value) {
+            alert('모든 번호를 선택해주세요.');
+            event.preventDefault();
+            return false;
+        }
+        if (selectedNumbers.has(value)) {
+            alert('중복된 번호가 있습니다. 다른 번호를 선택해주세요.');
+            event.preventDefault();
+            return false;
+        }
+        selectedNumbers.add(value);
+        selectedArray.push(parseInt(value));
+    }
+    lottoNumbersInput.value = JSON.stringify(selectedArray);
+    if (selectedNumbers.size !== 6) {
+        alert('6개의 번호를 정확히 선택해야 합니다.');
+        event.preventDefault();
+        return false;
+    }
+    return true;
+}
+document.querySelector('form').addEventListener('submit', validateForm);
+</script>
+</html>

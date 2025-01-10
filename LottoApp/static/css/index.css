@@ -1,0 +1,81 @@
+body {
+    background-image: url('../image/lotto-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.description{
+    font-size:12px;
+    text-align: center;
+    font-weight: bold;
+    color:red;
+    margin:10px 0;
+}
+.container {
+    max-width: 300px;
+    margin: 150px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+form{
+    margin-bottom: 0;
+}
+h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+label {
+    text-align: center;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color:#333;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+button {
+    width:100%;
+    margin-top:10px;
+    background-color: #453fb2;
+    border-radius: 8px;
+    border: none;
+    padding:10px 20px;
+    color:white;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+button:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.lotto-buy {
+    text-align: center;
+}
+.result-message, .error-message {
+    margin: 10px 0 0 0;
+    text-align: center;
+    font-size: 12px;
+    color: #0aba16;
+    font-weight: bold;
+}
+.error-message{
+    color:red;
+}
